@@ -1,77 +1,73 @@
-# Angular_Capacitor_App
-Angular_Capacitor_App
+Angular Capacitor App
 
+Bu proje, Angular ile geliştirilen bir web uygulamasının Capacitor kullanılarak nasıl mobil uygulamaya dönüştürülebileceğini göstermektedir. Uygulama AdminLTE teması üzerine inşa edilmiştir ve modern bir yönetim paneli arayüzü sunmaktadır.
 
---CAPACITOR
-* Capacitor'un ana npm bağımlılıklarını yükleme komutu
-- npm i @capacitor/core
-- npm i -D @capacitor/cli
-* Capacitor yapılandırmanızı başlatın
-- npx cap init
-    => What is the name of your app?
-        - Bu soru uygulamanın adı
-    =What should be the Package ID for your app?
-        - Uygulamanın uniq bir packageID si istenir
-        - bunun için com.example.app önerilen yapı
-        - uniq olmazsa platformlarda yayınlayamayız.
-- capacitor.config.ts dosyası oluşturulur ana uygulama dosya yapısında bu dosyanın içerisi 
-import type { CapacitorConfig } from '@capacitor/cli';
+🚀 Angular ve Capacitor ile Mobil Uygulama Geliştirme
 
-const config: CapacitorConfig = {
-  appId: 'com.angularcapacitor.app',
-  appName: 'angular-capacitor-app',
-  webDir: 'dist'
-};
+📌 Capacitor Nedir?
 
-export default config;
-** webDir buildedilen dosyaynın klasörünü yazıyor default olarak dist yazılmış ancak bu dist değil 
-webDir: 'dist/angular_capacitor_app/browser', bu şekilde olmalı
+Capacitor, Ionic ekibi tarafından geliştirilen, modern web teknolojilerini kullanarak mobil, web ve masaüstü uygulamaları oluşturmayı sağlayan bir çapraz platform çalışma zamanıdır. Cordova'nın modern alternatifi olarak geliştirilmiştir ve native özelliklere erişim için API desteği sunar.
 
+📥 Capacitor Kurulumu ve Entegrasyonu
 
-* Android ve iOS projelerinizi oluşturun
-- npm i @capacitor/android @capacitor/ios
-- npx cap add android
-- npx cap add ios
+Capacitor'u Angular projenize entegre etmek için aşağıdaki adımları takip edebilirsiniz:
 
-* Senkronizasyon işlemi 
-- ios ve android dosyalamalar oluşturulduktan sonra uygulamayı senkron ediyoruz ana koddaki her şey android ve iosa aktarılmış olması için yapılır.
-- npx cap sync
+1️⃣ Capacitor'u Projeye Dahil Edin
 
+npm install @capacitor/core @capacitor/cli
 
-Node.js 18 ile uyumlu olan bir Capacitor sürümünü yüklemek için @capacitor/cli paketini eski bir sürüme döndürün. Örneğin, 5.x.x yerine 4.x.x sürümünü yüklemek için şu komutu çalıştırın:
+2️⃣ Capacitor Konfigürasyonunu Başlatın
 
-npm install @capacitor/cli@4 @capacitor/core@4
-2. Capacitor Platform Paketlerini Eşleştirin
-Eğer iOS ve Android platformlarını kullanıyorsanız, bunları da 4.x.x sürümüne eşitlemeniz gerekir:
+npx cap init
 
-npm install @capacitor/ios@4 @capacitor/android@4
-3. Capacitor’u Senkronize Edin
-Eski sürüme geçtikten sonra proje dosyalarını senkronize edin:
+Bu komut çalıştırıldığında, sizden proje adı ve package ID bilgileri istenecektir. Örnek bir yapılandırma:
 
+? App name: Angular Capacitor App
+? App Package ID: com.example.app
+
+3️⃣ Mobil Platformları Ekleyin
+
+Capacitor, Android ve iOS platformlarını destekler. Aşağıdaki komutları kullanarak ilgili platformları ekleyebilirsiniz:
+
+npx cap add android
+npx cap add ios
+
+📌 Not: iOS platformunu eklemek için bir Mac bilgisayara ve Xcode’a ihtiyacınız vardır.
+
+4️⃣ Angular Projesini Mobil Platforma Aktarma
+
+npm run build
+npx cap copy
 npx cap sync
 
---projeyi ayağa kaldırdığınızda yaptığınız değişiklik anlık olarak telefonda da gözüksün istiyorsanız her seferinde npx cap copy yapmak istemiyorsanız 
- => ng serve --host 0.0.0.0 ile projeyi ayağa kaldırıyoruz daha sonra terminalde yazan 
- Network: http://192.168.0.10:4200/ alanındaki ip li alanı alıyoruz ve capacitor.config.ts içine yerleştiriyoruz 
+Bu komutlar, Angular uygulamasını www/ dizinine derler ve Capacitor ile mobil platforma aktarır.
 
- import type { CapacitorConfig } from '@capacitor/cli';
+📦 APK ve iOS IPA Dosyası Nasıl Oluşturulur?
 
-const config: CapacitorConfig = {
-  appId: 'com.angularcapacitor.app',
-  appName: 'angular-capacitor-app',
-  webDir: 'dist/angular_capacitor_app/browser',
-  server: {
-    url: 'http://192.168.0.10:4200/',
-    cleartext: true,
-  },
-};
+📌 Android İçin APK Oluşturma
 
-export default config;
+Android projesini açın:
 
- bu şekilde son halini alıyor. daha sonra proje açıkken yani ng serve --host 0.0.0.0 bu kodu çalıştırdıktan sonra başka bir terminal açıp
- - npx cap copy kodunu çalıştırıyoruz ve artık yaptığımız değiişklik anlık olarak telefona yansıyor.
+npx cap open android
 
---uygulama geliştirmesi bitip canlıya alınacak olduğu zaman server kısmı kapatılıp
- - ng build çaıştırılıp
- - npx cap copy ile tekrar kopyalıyoruz.
- eğer bu yapılmazsa canlı sistem local ipye gideceği için hata alır
+Android Studio açıldığında, Build > Build Bundle(s) / APK(s) > Build APK(s) seçeneğini kullanarak APK oluşturabilirsiniz.
+
+Oluşturulan APK dosyası, android/app/build/outputs/apk/debug/app-debug.apk dizininde bulunur.
+
+📌 iOS İçin IPA Dosyası Oluşturma
+
+Xcode’u açarak iOS projenizi çalıştırın:
+
+npx cap open ios
+
+Product > Archive seçeneğini kullanarak IPA dosyanızı oluşturabilirsiniz.
+
+📸 Ekran Görüntüleri
+
+ 
+
+📌 Not: Ekran görüntülerinin olduğu screenshots klasörünü oluşturun ve ilgili görselleri buraya ekleyin.
+
+📜 Lisans
+
+MIT Lisansı altında sunulmaktadır.
